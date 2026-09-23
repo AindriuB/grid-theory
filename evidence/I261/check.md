@@ -10,12 +10,14 @@ $ npx --yes html-validate dist/support/index.html dist/privacy/index.html
 0 errors, 0 warnings on both files. (The default ruleset's `doctype-style`
 rule requires an uppercase `<!DOCTYPE html>`; both owned files now use it —
 `dist/index.html`, owned by I260 and left byte-identical, still uses the
-site's original lowercase `<!doctype html>` and was not linted here.)
+site's original lowercase `<!doctype html>` and was not linted here.) Re-run
+after attempt 2's fixes; unchanged from attempt 1.
 
 ## Browser check (real CDP emulation, not a typed conclusion)
 
 - Browser: `Google Chrome 153.0.8010.54`, launched
-  `--headless=new --remote-debugging-port=9344`, a fresh `--user-data-dir`.
+  `--headless=new --remote-debugging-port=9345`, a fresh `--user-data-dir`
+  under this task's scratchpad.
 - Driver: Node `v24.19.0`, built-in `WebSocket`/`fetch`, no npm packages,
   kept in this task's scratchpad, never committed. Per page × width × mode:
   opens a new CDP target, `Emulation.setEmulatedMedia` sets
@@ -23,62 +25,123 @@ site's original lowercase `<!doctype html>` and was not linted here.)
   viewport to 390 or 1280 px, `Page.navigate` loads the real `dist/` served
   by `python3 -m http.server 8261 --directory dist`, then `Runtime.evaluate`
   reads real DOM/CSSOM values back.
-- Safety: the form-submission checks never call `location.href` with a
-  filled-in form — only the **empty-message** path is exercised live (it
-  returns before ever building a URL). The full "Data issue" example is
+- Safety: the JS-path submission checks below never call `location.href`
+  with a filled-in form — only the **empty-message** path is exercised live
+  (it returns before ever building a URL). The full "Data issue" example is
   verified separately, and only by direct function call under Node with no
   `window`/`location` at all — see `evidence/I261/mailto.md`. No mailto: URL
-  was ever navigated to or opened by this check.
+  was ever navigated to or opened by any check in this file.
 
-### Per page × width × mode (all 8 combinations)
+### Per page × width × mode (all 8 combinations, re-run after attempt 2)
 
-| page | width | mode | overflowPx | prefersDark | bodyContrast | store badge img | brand-mark src |
-|---|---|---|---|---|---|---|---|
-| support | 390 | light | 0 | false | 15.62 | app-store-badge-black.svg | icon-64.png |
-| support | 390 | dark | 0 | true | 15.62 | app-store-badge-white.svg | icon-64.png |
-| support | 1280 | light | 0 | false | 15.62 | app-store-badge-black.svg | icon-64.png |
-| support | 1280 | dark | 0 | true | 15.62 | app-store-badge-white.svg | icon-64.png |
-| privacy | 390 | light | 0 | false | 15.62 | app-store-badge-black.svg | icon-64.png |
-| privacy | 390 | dark | 0 | true | 15.62 | app-store-badge-white.svg | icon-64.png |
-| privacy | 1280 | light | 0 | false | 15.62 | app-store-badge-black.svg | icon-64.png |
-| privacy | 1280 | dark | 0 | true | 15.62 | app-store-badge-white.svg | icon-64.png |
+| page | width | mode | overflowPx | prefersDark | store badge img |
+|---|---|---|---|---|---|
+| support | 390 | light | 0 | false | app-store-badge-black.svg |
+| support | 390 | dark | 0 | true | app-store-badge-white.svg |
+| support | 1280 | light | 0 | false | app-store-badge-black.svg |
+| support | 1280 | dark | 0 | true | app-store-badge-white.svg |
+| privacy | 390 | light | 0 | false | app-store-badge-black.svg |
+| privacy | 390 | dark | 0 | true | app-store-badge-white.svg |
+| privacy | 1280 | light | 0 | false | app-store-badge-black.svg |
+| privacy | 1280 | dark | 0 | true | app-store-badge-white.svg |
 
 `overflowPx` = `scrollWidth − clientWidth` on `document.documentElement` — 0
 everywhere, no horizontal overflow on either page at either width, in either
-mode. `prefersDark` is the page's own
-`matchMedia('(prefers-color-scheme: dark)').matches`, confirming the CDP
-override reached the page. `store badge img` is the `.store-badge img`'s
-resolved `currentSrc` filename — the dark `<picture><source>` swap works
-under a real `prefers-color-scheme` on both pages. `brand-mark src` confirms
-the header/footer mark renders as the real `<img>` (`icon-64.png`), not the
-old `<span class="brand-mark">GT</span>`.
+mode, even though the form-note's mailto link is now real, longer static
+text (see below) rather than a placeholder ellipsis. `prefersDark` is the
+page's own `matchMedia('(prefers-color-scheme: dark)').matches`, confirming
+the CDP override reached the page. `store badge img` is the `.store-badge
+img`'s resolved `currentSrc` filename — the dark `<picture><source>` swap
+still works on both pages. Icons, Smart App Banner meta, `og:image`, brand
+mark and store-badge href were re-confirmed unchanged from attempt 1's pass
+and are not repeated here.
 
-Identical on every one of the 8 rows (so shown once): `favicon32 =
-../assets/img/icon/icon-32.png`, `touchIcon = ../assets/img/icon/icon-180.png`,
-`ogImage = https://gridtheory.app/assets/img/icon/og-image.png`,
-`itunesMeta = app-id=6805695204`, `themeMetas = ["(prefers-color-scheme:
-light)=#F5F7F6", "(prefers-color-scheme: dark)=#1A1C2E"]`,
-`storeBadgeHref = https://apps.apple.com/app/id6805695204`, `hasDataImage =
-false`, `hasOldBrandMark = false`.
+### Form behaviour, no-JS path (real CDP, `Emulation.setScriptExecutionDisabled`)
 
-### Form behaviour (support page, real DOM)
+Attempt 1's review: with JS off, the form had no `action` and carried
+`novalidate`, so the browser's default GET submission sent
+`support/?category=…&message=<text>` — the message reached the web host and
+browser history, and "Nothing is sent from this page." became false. Fix:
+the submit `<button>` now ships `disabled` in the static markup, and only
+`feedback.js`'s `init()` clears it. With script execution off, the button
+is never enabled, so there is no submittable form at all — no enabled
+submit control means neither a click nor an Enter-key implicit submission
+can fire a native form submission.
 
-The visible `[data-support-email-link]` anchor is empty in the raw HTML and
-filled by `feedback.js` on load:
-
-```json
-{ "href": "mailto:support%40gridtheory.app", "text": "support@gridtheory.app" }
-```
-
-Submitting with category "Bug" and an empty message does not navigate and
-sets `.form-status`:
+Verified live: `Emulation.setScriptExecutionDisabled({ value: true })`,
+then real synthetic input (`Input.dispatchMouseEvent` / `Input.insertText`,
+not a script call) — click into the category select, click + type
+`LEAK-MARKER-I261` into the message textarea, click the submit button, then
+refocus the message field and press Enter:
 
 ```json
 {
-  "before": "http://127.0.0.1:8261/support/",
-  "after": "http://127.0.0.1:8261/support/",
-  "status": "Please choose a category and add a message before sending."
+  "submitDisabledBefore": true,
+  "submitDisabledAfter": true,
+  "typedValueBeforeSubmitAttempt": "LEAK-MARKER-I261",
+  "finalLocationHrefAndFormStatus": "http://127.0.0.1:8261/support/||",
+  "navEventsDuringInteractions": []
 }
 ```
 
-`before` and `after` are identical — no navigation occurred.
+`navEventsDuringInteractions` is `Page.frameRequestedNavigation` /
+`Page.frameNavigated` / `Page.navigatedWithinDocument`, filtered to the
+interaction window (after the initial page load) — empty, so neither the
+click nor the Enter key produced any navigation, requested or committed;
+`location.href` is unchanged and carries no query string, so the marker
+never left the textarea. `submitDisabledAfter` stays `true` because
+`feedback.js` never ran to clear it.
+
+The previously-empty `[data-support-email-link]` anchor (attempt 1: `href="#"`,
+text `…`, filled by script) is corrected here to a **statically-populated**
+mailto link — `href="mailto:support@gridtheory.app"`, text
+`support@gridtheory.app` — always present in the raw HTML, so it works with
+no JS at all, per review's "the plain support@gridtheory.app link still
+usable without JS." `feedback.js` still runs the same
+`link.href = …; link.textContent = …;` assignment on load (matching the
+shared contract's "filled by script"), so JS-enabled visitors see identical,
+re-confirmed output. Deliberate, noted deviation: the shared site contract's
+"exactly one occurrence [of the address] in `dist/`" now reads two
+occurrences of the literal string on `dist/support/index.html`'s single
+body line — the form's `data-support-email` attribute (the one acceptance
+checks against, `rg -n 'support@gridtheory\.app' dist` still returns that
+one *line*) and this static anchor. Given the address is now real, verified
+and meant to be public, and the reviewer explicitly asked for a working
+no-JS link, this was judged the safer trade-off over leaving the anchor
+inert without JS.
+
+### Form behaviour, JS path — repeated empty submit (real CDP, script enabled)
+
+Category defaults to "Bug" (the `<select>`'s first `<option>`), so an empty
+*message* is the reachable "both required fields not satisfied" case.
+Submitting twice in a row with the message still blank:
+
+```json
+{
+  "afterFirstSubmit": {
+    "status": "Please choose a category and add a message before sending.",
+    "activeId": "fb-message",
+    "categoryInvalid": null,
+    "messageInvalid": "true"
+  },
+  "afterSecondSubmit": {
+    "status": "Please choose a category and add a message before sending.",
+    "activeId": "fb-message",
+    "mutations": [
+      "Please choose a category and add a message before sending.",
+      "",
+      "Please choose a category and add a message before sending."
+    ]
+  },
+  "navigationEventsDuringSubmits": []
+}
+```
+
+`messageInvalid` confirms `aria-invalid="true"` lands on the empty field and
+`activeId` confirms focus moves to it (review's "move focus to the first
+missing field and set aria-invalid"). `mutations` is a `MutationObserver` on
+`.form-status` spanning both submits — on the second (identical-text)
+submit it recorded clear-then-reset (`"…"` → `""` → `"…"`), not a no-op, so
+an `aria-live="polite"` region announces again on repeat (review's "clear
+then re-set the status so screen readers re-announce"). No navigation
+occurred on either submit.

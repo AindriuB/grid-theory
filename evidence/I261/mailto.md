@@ -10,11 +10,13 @@ Node (no browser, no network) with:
 - app version: `1.1`
 - message: `Points & odds? 100%`
 
-## Built URL (exact, `encodeURIComponent` applied to the address, subject and
-body — matching what `feedback.js` sets as `location.href`)
+## Built URL (exact — the address goes through `mailtoAddress`, which keeps
+`@` literal per RFC 6068 and percent-encodes everything else; subject and
+body are plain `encodeURIComponent` — matching what `feedback.js` sets as
+`location.href`)
 
 ```
-mailto:support%40gridtheory.app?subject=GridTheory%20feedback%3A%20Data%20issue&body=Category%3A%20Data%20issue%0ADevice%3A%20iPhone%2017%20Pro%0AiOS%20version%3A%2026.0%0AApp%20version%3A%201.1%0A%0AMessage%3A%0APoints%20%26%20odds%3F%20100%25
+mailto:support@gridtheory.app?subject=GridTheory%20feedback%3A%20Data%20issue&body=Category%3A%20Data%20issue%0ADevice%3A%20iPhone%2017%20Pro%0AiOS%20version%3A%2026.0%0AApp%20version%3A%201.1%0A%0AMessage%3A%0APoints%20%26%20odds%3F%20100%25
 ```
 
 ## Decoded
@@ -35,8 +37,11 @@ mailto:support%40gridtheory.app?subject=GridTheory%20feedback%3A%20Data%20issue&
 Every field is on its own labelled line, the message is verbatim (including
 `&`, `?`, `%`, which round-trip correctly through `encodeURIComponent`/
 `decodeURIComponent`), and the subject matches `GridTheory feedback: Data
-issue`. The URL was only decoded and inspected here — never opened, so no
-mail app was launched and no message was sent.
+issue`. The "to" address's `@` is a literal character, not `%40` — RFC 6068
+does not reserve `@` as a delimiter in the mailto scheme's addr-spec, and
+escaping it (attempt 1's behaviour) was an unnecessary, over-eager encode
+flagged in review. The URL was only decoded and inspected here — never
+opened, so no mail app was launched and no message was sent.
 
 ## Method
 
