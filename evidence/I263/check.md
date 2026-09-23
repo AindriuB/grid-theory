@@ -6,6 +6,81 @@ Branch sha: `task/I263-privacy-support-disclosure` branched from local
 the worktree. All checks below (byte-identical prefix/suffix/sections,
 `git diff --stat`) compare against this same sha.
 
+## Attempt 3 — changes from attempt 2's reviewer feedback + scope extension
+
+Attempt 2 (`db61efc`) passed the tester (21/21) but the reviewer flagged one
+remaining overstatement, and the same review round brought a one-sentence
+scope extension for "Changes to this policy". Both are applied on top of
+`db61efc`, on the same branch:
+
+1. **Contacting support — the sale/marketing exception scoped too
+   broadly.** "We do not sell it, share it, or use it for marketing, except
+   with the email services that deliver and store it." read as if the
+   exception covered all three verbs, permitting sale or marketing use by
+   those services. Reworded so the exception only covers sharing: "We do
+   not sell it or use it for marketing, and share it only with the email
+   services that deliver and store it."
+2. **Restored an explicit deletion commitment**, per the reviewer's
+   suggestion, while keeping the privacy-questions clause: the closing
+   sentence now reads "We keep it only as long as needed to resolve your
+   request; you can ask us to delete it by emailing the same address, and
+   we will, and you can send privacy questions there too" (previously "We
+   keep it only as long as needed to resolve your request, and privacy
+   questions or deletion requests can be sent to the same address" — a
+   passive construction with no explicit "we will").
+3. **Scope extension — "Changes to this policy" (exactly one sentence):**
+   "If the app's data practices change, this policy will be updated before
+   those changes take effect" named only the app, but the policy now also
+   covers the support email and hosting/CDN disclosures added by this same
+   task. Reworded to: "If our data practices change — for the app,
+   support email, or this website's hosting — this policy will be updated
+   before those changes take effect."
+
+Everything else outside `<main>`'s Contacting-support section, Hosting
+section (unchanged since attempt 1) and this one "Changes to this policy"
+sentence is unchanged from attempt 2. Every check below was re-run against
+the current content, not just re-asserted; the Contacting-support quote,
+the byte-identical-sections diff, the diff --stat, and the screenshots are
+freshly re-captured.
+
+```
+$ rg -o '<h2>[^<]*</h2>' dist/privacy/index.html
+<h2>Information GridTheory uses</h2>
+<h2>Your scenarios and activity</h2>
+<h2>Location</h2>
+<h2>Children’s privacy</h2>
+<h2>Hosting</h2>
+<h2>Changes to this policy</h2>
+<h2>Contacting support</h2>
+```
+
+Updated "Changes to this policy" section:
+
+> If our data practices change — for the app, support email, or this
+> website's hosting — this policy will be updated before those changes
+> take effect.
+
+Updated "Contacting support" section text (the `<p>` following that `<h2>`):
+
+> If you email support@gridtheory.app, directly or through the form on the
+> support page, we receive your name and email address as your mail app
+> sends them, your message, and anything you include; the form also lets
+> you include your device, iOS version, and app version to help us help
+> you. The form itself sends nothing; it opens your mail app, and nothing
+> is sent until you press send there. We use what you send only to reply
+> and fix problems. We do not sell it or use it for marketing, and share
+> it only with the email services that deliver and store it. We keep it
+> only as long as needed to resolve your request; you can ask us to delete
+> it by emailing the same address, and we will, and you can send privacy
+> questions there too.
+
+Covers (a) what we receive and the form's named fields, (b) the form sends
+nothing itself, (c) used only to reply/fix, (d) not sold/shared/used for
+marketing (the exception now scoped only to sharing, per attempt 2's
+review), (e) kept only as long as needed, (f) deleted on request by
+emailing the same address, restated as an explicit commitment ("we will"),
+per attempt 2's review.
+
 ## Attempt 2 — changes from reviewer feedback + scope extension
 
 Attempt 1 (`3874c48`) passed the tester (20/20) but the reviewer flagged
@@ -115,18 +190,19 @@ Section text (the `<p>` following that `<h2>`):
 > you include your device, iOS version, and app version to help us help
 > you. The form itself sends nothing; it opens your mail app, and nothing
 > is sent until you press send there. We use what you send only to reply
-> and fix problems. We do not sell it, share it, or use it for marketing,
-> except with the email services that deliver and store it. We keep it
-> only as long as needed to resolve your request, and privacy questions or
-> deletion requests can be sent to the same address.
+> and fix problems. We do not sell it or use it for marketing, and share
+> it only with the email services that deliver and store it. We keep it
+> only as long as needed to resolve your request; you can ask us to delete
+> it by emailing the same address, and we will, and you can send privacy
+> questions there too.
 
 Covers (a) what we receive and the form's named fields, (b) the form sends
 nothing itself, (c) used only to reply/fix, (d) not sold/shared/used for
-marketing (qualified, per attempt 1's review, with the necessary exception
-for the email services that relay and store the message — no provider
-named), (e) kept only as long as needed, (f) deleted on request by
-emailing the same address (restated as a general privacy-questions/
-deletion-requests clause, per attempt 1's review).
+marketing (the sale/marketing exception scoped to sharing only, per
+attempt 2's review — no provider named), (e) kept only as long as needed,
+(f) deleted on request by emailing the same address, restated as an
+explicit commitment ("we will"), per attempt 2's review, alongside the
+privacy-questions clause.
 
 Required substrings, each present at least once:
 
@@ -289,16 +365,16 @@ suffix identical: True
 ```
 $ git diff --stat 1a9c5ed7c447f200ea127ddcf2dfdcb86a961fed
  dist/privacy/index.html             |   2 +-
- evidence/I263/check.md              | 358 ++++++++++++++++++++++++++++++++++++
+ evidence/I263/check.md              | 437 ++++++++++++++++++++++++++++++++++++
  evidence/I263/privacy-390-dark.png  | Bin 0 -> 182703 bytes
  evidence/I263/privacy-390-light.png | Bin 0 -> 187478 bytes
- 4 files changed, 359 insertions(+), 1 deletion(-)
+ 4 files changed, 438 insertions(+), 1 deletion(-)
 ```
 
-Only `dist/privacy/index.html` and `evidence/I263/*` (run after the
-attempt-2 commit `6a4bb74`; the `check.md` line count is inherently a
-snapshot slightly behind this file's own final byte count, since the file
-cannot describe its own last edit).
+Only `dist/privacy/index.html` and `evidence/I263/*` (re-run for attempt 3,
+against the uncommitted attempt-3 changes on top of `db61efc`; the
+`check.md` line count is inherently a snapshot slightly behind this file's
+own final byte count, since the file cannot describe its own last edit).
 
 ## No style/script leakage, classes already exist
 
@@ -323,9 +399,12 @@ $ npx --yes html-validate dist/privacy/index.html
 
 ## Headless Chrome, CDP, 390 px light/dark
 
-Re-captured for attempt 2 against the updated body content (both
-screenshots below show the reworded Jolpica sentence and Contacting
-support section). Method matches `evidence/I259/check.md`:
+Re-captured for attempt 3 against the updated body content (the
+Contacting-support and "Changes to this policy" wording changed; the
+visible above-the-fold viewport captured by these screenshots is
+unchanged since attempt 2, which is why the two PNGs are byte-identical
+in size to the attempt-2 files — the edited text sits further down the
+page than the 390×844 viewport). Method matches `evidence/I259/check.md`:
 `Google Chrome 153.0.8010.54`, `--headless=new --remote-debugging-port=9263`,
 fresh `--user-data-dir`. Driver: Node `v24.19.0`, built-in `WebSocket`/`fetch`,
 script kept in the scratchpad, never committed. `Emulation.setDeviceMetricsOverride`
