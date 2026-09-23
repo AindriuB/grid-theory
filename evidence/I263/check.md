@@ -289,16 +289,16 @@ suffix identical: True
 ```
 $ git diff --stat 1a9c5ed7c447f200ea127ddcf2dfdcb86a961fed
  dist/privacy/index.html             |   2 +-
- evidence/I263/check.md              | 289 ++++++++++++++++++++++++++++++++++++
- evidence/I263/privacy-390-dark.png  | Bin 0 -> 176120 bytes
- evidence/I263/privacy-390-light.png | Bin 0 -> 181006 bytes
- 4 files changed, 290 insertions(+), 1 deletion(-)
+ evidence/I263/check.md              | 358 ++++++++++++++++++++++++++++++++++++
+ evidence/I263/privacy-390-dark.png  | Bin 0 -> 182703 bytes
+ evidence/I263/privacy-390-light.png | Bin 0 -> 187478 bytes
+ 4 files changed, 359 insertions(+), 1 deletion(-)
 ```
 
-Only `dist/privacy/index.html` and `evidence/I263/*` (the byte counts and
-`check.md` line count above are from the pending working-tree diff at the
-time this was run, before the attempt-2 commit; re-run after committing
-shows the same two paths, updated counts).
+Only `dist/privacy/index.html` and `evidence/I263/*` (run after the
+attempt-2 commit `6a4bb74`; the `check.md` line count is inherently a
+snapshot slightly behind this file's own final byte count, since the file
+cannot describe its own last edit).
 
 ## No style/script leakage, classes already exist
 
