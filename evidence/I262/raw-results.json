@@ -1,0 +1,173 @@
+{
+  "header": {
+    "index": "<header class=\"site-header\"><a class=\"brand\" href=\"./\" aria-label=\"GridTheory home\"><img class=\"brand-mark\" src=\"assets/img/icon/icon-64.png\" srcset=\"assets/img/icon/icon-128.png 2x\" width=\"29\" height=\"29\" alt=\"\"> GridTheory</a><nav aria-label=\"Primary navigation\"><a href=\"#features\">Features</a><a href=\"privacy/\">Privacy</a><a href=\"support/\">Support</a></nav></header>",
+    "support": "<header class=\"site-header\"><a class=\"brand\" href=\"../\" aria-label=\"GridTheory home\"><img class=\"brand-mark\" src=\"../assets/img/icon/icon-64.png\" srcset=\"../assets/img/icon/icon-128.png 2x\" width=\"29\" height=\"29\" alt=\"\"> GridTheory</a><nav aria-label=\"Primary navigation\"><a href=\"../#features\">Features</a><a href=\"../privacy/\">Privacy</a><a href=\"./\">Support</a></nav></header>",
+    "privacy": "<header class=\"site-header\"><a class=\"brand\" href=\"../\" aria-label=\"GridTheory home\"><img class=\"brand-mark\" src=\"../assets/img/icon/icon-64.png\" srcset=\"../assets/img/icon/icon-128.png 2x\" width=\"29\" height=\"29\" alt=\"\"> GridTheory</a><nav aria-label=\"Primary navigation\"><a href=\"../#features\">Features</a><a href=\"./\">Privacy</a><a href=\"../support/\">Support</a></nav></header>"
+  },
+  "footer": {
+    "index": "<div><a class=\"brand\" href=\"./\"><img class=\"brand-mark\" src=\"assets/img/icon/icon-64.png\" srcset=\"assets/img/icon/icon-128.png 2x\" width=\"29\" height=\"29\" alt=\"\"> GridTheory</a> <a class=\"store-badge\" href=\"https://apps.apple.com/app/id6805695204\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"assets/img/badges/app-store-badge-white.svg\"><img src=\"assets/img/badges/app-store-badge-black.svg\" alt=\"Download on the App Store\" width=\"120\" height=\"40\"></picture></a></div>",
+    "support": "<div><a class=\"brand\" href=\"../\"><img class=\"brand-mark\" src=\"../assets/img/icon/icon-64.png\" srcset=\"../assets/img/icon/icon-128.png 2x\" width=\"29\" height=\"29\" alt=\"\"> GridTheory</a> <a class=\"store-badge\" href=\"https://apps.apple.com/app/id6805695204\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"../assets/img/badges/app-store-badge-white.svg\"><img src=\"../assets/img/badges/app-store-badge-black.svg\" alt=\"Download on the App Store\" width=\"120\" height=\"40\"></picture></a></div>",
+    "privacy": "<div><a class=\"brand\" href=\"../\"><img class=\"brand-mark\" src=\"../assets/img/icon/icon-64.png\" srcset=\"../assets/img/icon/icon-128.png 2x\" width=\"29\" height=\"29\" alt=\"\"> GridTheory</a> <a class=\"store-badge\" href=\"https://apps.apple.com/app/id6805695204\"><picture><source media=\"(prefers-color-scheme: dark)\" srcset=\"../assets/img/badges/app-store-badge-white.svg\"><img src=\"../assets/img/badges/app-store-badge-black.svg\" alt=\"Download on the App Store\" width=\"120\" height=\"40\"></picture></a></div>"
+  },
+  "viewport": [
+    {
+      "page": "index",
+      "width": 390,
+      "scheme": "light",
+      "bg": "rgb(245, 247, 246)",
+      "color": "rgb(26, 28, 46)",
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "title": "GridTheory — Championship Odds & Scenarios",
+      "overflow": false
+    },
+    {
+      "page": "index",
+      "width": 390,
+      "scheme": "dark",
+      "bg": "rgb(26, 28, 46)",
+      "color": "rgb(245, 247, 246)",
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "title": "GridTheory — Championship Odds & Scenarios",
+      "overflow": false
+    },
+    {
+      "page": "index",
+      "width": 1280,
+      "scheme": "light",
+      "bg": "rgb(245, 247, 246)",
+      "color": "rgb(26, 28, 46)",
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "title": "GridTheory — Championship Odds & Scenarios",
+      "overflow": false
+    },
+    {
+      "page": "index",
+      "width": 1280,
+      "scheme": "dark",
+      "bg": "rgb(26, 28, 46)",
+      "color": "rgb(245, 247, 246)",
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "title": "GridTheory — Championship Odds & Scenarios",
+      "overflow": false
+    },
+    {
+      "page": "support",
+      "width": 390,
+      "scheme": "light",
+      "bg": "rgb(245, 247, 246)",
+      "color": "rgb(26, 28, 46)",
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "title": "Support — GridTheory",
+      "overflow": false
+    },
+    {
+      "page": "support",
+      "width": 390,
+      "scheme": "dark",
+      "bg": "rgb(26, 28, 46)",
+      "color": "rgb(245, 247, 246)",
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "title": "Support — GridTheory",
+      "overflow": false
+    },
+    {
+      "page": "support",
+      "width": 1280,
+      "scheme": "light",
+      "bg": "rgb(245, 247, 246)",
+      "color": "rgb(26, 28, 46)",
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "title": "Support — GridTheory",
+      "overflow": false
+    },
+    {
+      "page": "support",
+      "width": 1280,
+      "scheme": "dark",
+      "bg": "rgb(26, 28, 46)",
+      "color": "rgb(245, 247, 246)",
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "title": "Support — GridTheory",
+      "overflow": false
+    },
+    {
+      "page": "privacy",
+      "width": 390,
+      "scheme": "light",
+      "bg": "rgb(245, 247, 246)",
+      "color": "rgb(26, 28, 46)",
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "title": "Privacy Policy — GridTheory",
+      "overflow": false
+    },
+    {
+      "page": "privacy",
+      "width": 390,
+      "scheme": "dark",
+      "bg": "rgb(26, 28, 46)",
+      "color": "rgb(245, 247, 246)",
+      "scrollWidth": 390,
+      "clientWidth": 390,
+      "title": "Privacy Policy — GridTheory",
+      "overflow": false
+    },
+    {
+      "page": "privacy",
+      "width": 1280,
+      "scheme": "light",
+      "bg": "rgb(245, 247, 246)",
+      "color": "rgb(26, 28, 46)",
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "title": "Privacy Policy — GridTheory",
+      "overflow": false
+    },
+    {
+      "page": "privacy",
+      "width": 1280,
+      "scheme": "dark",
+      "bg": "rgb(26, 28, 46)",
+      "color": "rgb(245, 247, 246)",
+      "scrollWidth": 1280,
+      "clientWidth": 1280,
+      "title": "Privacy Policy — GridTheory",
+      "overflow": false
+    }
+  ],
+  "gallery": {
+    "before": {
+      "scrollLeft": 20,
+      "scrollWidth": 1241,
+      "clientWidth": 390,
+      "firstVisibleIndex": 0,
+      "captions": [
+        "Race weekend, with Pro session countdowns.",
+        "Build a scenario, one result at a time.",
+        "The same screen, full-size on iPad.",
+        "Race weekend on iPad, with Pro session countdowns."
+      ]
+    },
+    "after": {
+      "scrollLeft": 544,
+      "firstVisibleIndex": 2
+    }
+  },
+  "noJs": {
+    "submitDisabled": true,
+    "mailtoHref": "mailto:support@gridtheory.app",
+    "mailtoText": "support@gridtheory.app",
+    "noscriptPresent": true
+  },
+  "mailto": {
+    "requestedNav": "mailto:support@gridtheory.app?subject=GridTheory%20feedback%3A%20Bug&body=Category%3A%20Bug%0ADevice%3A%20(not%20given)%0AiOS%20version%3A%20(not%20given)%0AApp%20version%3A%20(not%20given)%0A%0AMessage%3A%0ATest%20message%20from%20I262."
+  }
+}
