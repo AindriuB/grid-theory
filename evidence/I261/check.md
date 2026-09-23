@@ -100,15 +100,27 @@ no JS at all, per review's "the plain support@gridtheory.app link still
 usable without JS." `feedback.js` still runs the same
 `link.href = …; link.textContent = …;` assignment on load (matching the
 shared contract's "filled by script"), so JS-enabled visitors see identical,
-re-confirmed output. Deliberate, noted deviation: the shared site contract's
-"exactly one occurrence [of the address] in `dist/`" now reads two
-occurrences of the literal string on `dist/support/index.html`'s single
-body line — the form's `data-support-email` attribute (the one acceptance
-checks against, `rg -n 'support@gridtheory\.app' dist` still returns that
-one *line*) and this static anchor. Given the address is now real, verified
-and meant to be public, and the reviewer explicitly asked for a working
-no-JS link, this was judged the safer trade-off over leaving the anchor
-inert without JS.
+re-confirmed output.
+
+Deliberate, noted deviation: the shared site contract's "exactly one
+occurrence [of the address] in `dist/`" now reads three occurrences of
+the literal string on `dist/support/index.html`'s single body line — the
+form's `data-support-email` attribute, the fallback anchor's `href`, and
+that anchor's text. Counted with `rg -o`, not `rg -n` lines, since the
+page body is one physical line, so a line count reads 1 regardless of
+how many occurrences it holds:
+
+```
+$ rg -o 'support@gridtheory\.app' dist/support/index.html | wc -l
+       3
+
+$ rg -n 'support@gridtheory\.app' dist
+dist/support/index.html:3:<body><header class="site-header"><a class="brand" href="../" aria-label="GridTheory home"><img class="brand-mark" src="../assets/img/icon/icon-64.png" srcset="../assets/img/icon/icon-128.png 2x" width="29" height="29" alt=""> GridTheory</a><nav aria-label="Primary navigation"><a href="../#features">Features</a><a href="../privacy/">Privacy</a><a href="./">Support</a></nav></header><main class="legal"><p class="eyebrow">GridTheory</p><h1>Support</h1><h2>Need help?</h2><p>Please include the app version, your iPhone or iPad model, and a short description of what happened, or use the form below.</p><h2>Send feedback</h2><form class="feedback-form" id="feedback-form" data-support-email="support@gridtheory.app" novalidate><div class="field"><label for="fb-category">Category</label><select id="fb-category" name="category" required><option value="Bug">Bug</option><option value="Idea">Idea</option><option value="Data issue">Data issue</option><option value="Other">Other</option></select></div><div class="field"><label for="fb-device">Device</label><input id="fb-device" name="device" type="text" autocomplete="off"></div><div class="field"><label for="fb-ios">iOS version</label><input id="fb-ios" name="ios" type="text" autocomplete="off"></div><div class="field"><label for="fb-app-version">App version</label><input id="fb-app-version" name="appVersion" type="text" autocomplete="off"></div><div class="field field--full"><label for="fb-message">Message</label><textarea id="fb-message" name="message" maxlength="1500" required></textarea></div><button class="button" type="submit" disabled>Send feedback</button><p class="form-note">Opens your mail app with a prefilled message to <a class="support-email" data-support-email-link href="mailto:support@gridtheory.app">support@gridtheory.app</a>. Nothing is sent from this page.</p><p class="form-status" role="status" aria-live="polite"></p></form><noscript><p>Sending feedback needs JavaScript enabled in your browser.</p></noscript><h2>Privacy</h2><p>GridTheory does not collect personal information. Read the full <a class="text-link" href="../privacy/">privacy policy</a>.</p></main><footer><div><a class="brand" href="../"><img class="brand-mark" src="../assets/img/icon/icon-64.png" srcset="../assets/img/icon/icon-128.png 2x" width="29" height="29" alt=""> GridTheory</a> <a class="store-badge" href="https://apps.apple.com/app/id6805695204"><picture><source media="(prefers-color-scheme: dark)" srcset="../assets/img/badges/app-store-badge-white.svg"><img src="../assets/img/badges/app-store-badge-black.svg" alt="Download on the App Store" width="120" height="40"></picture></a></div><div class="footer-links"><a href="../privacy/">Privacy policy</a><a href="./">Support</a></div><p class="disclaimer">Unofficial. Not associated with Formula One Licensing BV or the FIA.</p></footer><script src="../assets/feedback.js" defer></script></body></html>
+```
+
+Given the address is now real, verified and meant to be public, and the
+reviewer explicitly asked for a working no-JS link, this was judged the
+safer trade-off over leaving the anchor inert without JS.
 
 ### Form behaviour, JS path — repeated empty submit (real CDP, script enabled)
 
