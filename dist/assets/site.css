@@ -135,6 +135,7 @@ nav a:focus-visible, .footer-links a:focus-visible, .text-link:focus-visible,
 .hero-art img {
   width: 100%;
   max-width: 350px;
+  height: auto;
   margin: auto;
   display: block;
   border-radius: 35px;
