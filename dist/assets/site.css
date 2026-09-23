@@ -7,7 +7,7 @@
   --muted: rgba(26, 28, 46, 0.66);
   --accent: #005F73;
   --accent-fill: #005F73;
-  --accent-fill-ink: #FFFFFF; /* exception: literal white — contract mandates white text on the filled button in both modes, see palette.md */
+  --accent-fill-ink: #FFFFFF; /* exception: literal white, see palette.md */
   --accent-glow: rgba(0, 95, 115, 0.22);
   --focus: #005F73;
   --shadow: rgba(26, 28, 46, 0.55);
@@ -24,7 +24,7 @@
     --accent-fill: #005F73;
     --accent-glow: rgba(62, 207, 192, 0.22);
     --focus: #3ECFC0;
-    --shadow: rgba(0, 0, 0, 0.55); /* exception: literal black shadow, dark mode only — a navy-tinted shadow disappears against the navy background; kept low-alpha and decorative only, see palette.md */
+    --shadow: rgba(0, 0, 0, 0.55); /* exception: literal black, dark mode only, see palette.md */
   }
 }
 
@@ -219,7 +219,7 @@ nav a:focus-visible, .footer-links a:focus-visible, .text-link:focus-visible,
 }
 .store-badge img {
   display: block;
-  height: 44px; /* Apple's Identity Guidelines: on-screen badge minimum 40px tall; 44px kept for margin, see palette.md */
+  height: 44px; /* minimum height rationale in palette.md */
   width: auto;
 }
 .store-badge:focus-visible {
@@ -244,7 +244,7 @@ nav a:focus-visible, .footer-links a:focus-visible, .text-link:focus-visible,
   text-decoration: none;
   cursor: pointer;
 }
-.button:hover { background: var(--accent); color: var(--accent-fill-ink); }
+.button:hover { box-shadow: 0 10px 24px var(--accent-glow); transform: translateY(-1px); }
 .button:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
 
 footer { border-top: 1px solid var(--line); padding: 38px 28px 48px; display: grid; grid-template-columns: 1fr auto; gap: 22px; }

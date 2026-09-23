@@ -63,10 +63,27 @@ compute the above (not committed, scratchpad-only):
 ## App Store badge minimum size
 
 `.store-badge img` is set to `height: 44px; width: auto;` (aspect ratio
-preserved from the image's own intrinsic size). Apple's Identity Guidelines
-for the "Download on the App Store" badge specify a minimum on-screen
-height of 40 px; 44 px is used here to sit comfortably above that floor
-while still reading as an inline element next to body copy. `.store-badge`
-and `.store-badge img` never set `filter`, `opacity` below `1`, `transform`,
-or a `background`/`border` on the image — the artwork is shown exactly as
-supplied, per Apple's marketing guidelines on badge use.
+preserved from the image's own intrinsic size).
+
+Source (checked 2026-09-23): Apple Developer, "Marketing Resources and
+Identity Guidelines" → App Store Badges → Graphic Standards,
+<https://developer.apple.com/app-store/marketing/guidelines/>: "Minimum
+badge height is 10 mm for use in printed materials and 40 px for use
+onscreen." 44 px is used here to sit above that 40 px floor while still
+reading as an inline element next to body copy. `.store-badge` and
+`.store-badge img` never set `filter`, `opacity` below `1`, `transform`, or
+a `background`/`border` on the image — the artwork is shown exactly as
+supplied, per the same guidelines' badge-use rules (don't modify, angle, or
+animate the badge).
+
+## Button hover (fixed after review)
+
+`.button:hover` originally swapped the fill to `var(--accent)`, which is
+`#3ECFC0` in dark mode — white text on that fill is 1.93:1, well under the
+4.5:1 floor, and also equalled the fill in light mode so hover gave no
+feedback there either. Fixed to leave `background`/`color` untouched on
+hover (`--accent-fill` `#005F73` with white text stays exactly as in the
+contrast table above, both modes) and give feedback with
+`box-shadow: 0 10px 24px var(--accent-glow); transform: translateY(-1px);`
+instead — glow colour already varies correctly by mode via `--accent-glow`,
+and neither property touches the text/fill colours the contrast row covers.
